@@ -1,0 +1,10 @@
+new Handler(Looper.getMainLooper()) 精华 new Handler() 和 new Handler(Looper.getMainLooper()) 的区别
+
+
+new Handler() , 如果是在主线程中是没问题，但是有的时候可能会在子线程中调用，肯定就报错
+new Handler(Looper.getMainLooper())，确保创建的Handler永远在主线程中，Looper要是主线程的Looper
+
+
+
+
+
