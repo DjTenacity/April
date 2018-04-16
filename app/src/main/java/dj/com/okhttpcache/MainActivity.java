@@ -11,8 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
-
+import com.jakewharton.rxbinding2.view.RxView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
@@ -24,6 +25,13 @@ import dj.com.okhttpcache.download.DownloadCallback;
 import dj.com.okhttpcache.download.DownloadFacade;
 import dj.com.okhttpcache.interceptor.CacheRequestInterceptor;
 import dj.com.okhttpcache.interceptor.CacheResponseInterceptor;
+import dj.com.okhttpcache.retrofit.simple.RetrofitClient;
+import dj.com.okhttpcache.retrofit.simple.UserLoginResult;
+import dj.com.okhttpcache.rxregin.RxLogin;
+import dj.com.okhttpcache.rxregin.RxLoginPlatform;
+import dj.com.okhttpcache.rxregin.RxLoginResult;
+import dj.com.sharelib.ShareApplication;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import okhttp3.Cache;
 import okhttp3.Call;
@@ -256,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
     void share(){
         ShareApplication.attach(this);
 
-       View mClearContentmClearContent = findViewById(R.id.clear_content);
+       View mClearContent = findViewById(R.id.tv);
         RxView.clicks(mClearContent).subscribe(new Consumer<Object>() {
             @Override
             public void accept(Object o) throws Exception {
@@ -274,6 +282,22 @@ public class MainActivity extends AppCompatActivity {
                         });
             }
         });
+    }
+
+    void myRetrofit(){
+
+        RetrofitClient.getServiceApi().userLogin("fff", "1111111")
+                .enqueue(new dj.com.okhttpcache.retrofit.Callback<UserLoginResult>() {
+                    @Override
+                    public void onResponse(dj.com.okhttpcache.retrofit.Call<UserLoginResult> call, dj.com.okhttpcache.retrofit.Response<UserLoginResult> response) {
+                        Log.e("TAG",response.body.toString());
+                    }
+
+                    @Override
+                    public void onFailure(dj.com.okhttpcache.retrofit.Call<UserLoginResult> call, Throwable t) {
+
+                    }
+                });
     }
 
 }
